@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+
+mainClassName = 'com.tracy.cn.HelloGradle'
+
+group 'com.tracy.cn'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile gradleApi()
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+this.afterEvaluate {
+    println(this.rootProject.name)
+    println("project 配置阶段结束后执行")
+}
+task helloTask(group: "example",name:"myTask"
+){
+    println("hello task")
+    dependsOn(this.tasks.findAll {
+        task->return task.name.startsWith('lib')
+    })
+}
